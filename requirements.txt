@@ -2,7 +2,6 @@ numpy
 pandas
 scikit-learn
 matplotlib
-ipykernel
 seaborn
 imblearn
 xgboost
