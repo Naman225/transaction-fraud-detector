@@ -23,7 +23,10 @@ class PredictionPipeline:
         df_scaled[self.feature_scale] = self.scaler.transform(df[self.feature_scale])
 
         probabilities = self.model.predict_proba(df_scaled)[:, 1]
-        print(self.model.predict_proba(df_scaled))
+        logger.debug(
+            f"Max fraud probability: "
+            f"{probabilities.max():.4f}"
+        )
         predictions = (probabilities >= threshold).astype(int)
 
         logger.info(f"Predictions complete — {int(predictions.sum())} fraud(s) detected out of {len(predictions)} transactions.")

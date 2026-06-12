@@ -11,3 +11,5 @@ shap
 mlflow
 fastapi
 uvicorn[standard]
+streamlit 
+requests
