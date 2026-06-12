@@ -1,7 +1,0 @@
-[2026-06-12 14:47:57,318] [11] [src.components.data_ingestion] [INFO] - Data Ingestion started ... 
-[2026-06-12 14:47:58,728] [23] [src.components.data_ingestion] [INFO] - Data Ingestion Successfully Completed
-[2026-06-12 14:47:58,728] [40] [src.components.data_transformation] [INFO] - Data Transformation Started ...
-[2026-06-12 14:47:59,017] [18] [src.utils.save_object] [INFO] - Successfully saved object to artifacts/model/scaler.pkl
-[2026-06-12 14:48:03,718] [52] [src.components.data_transformation] [INFO] - Before SMOTE - Fraud Count : 394 , Genuine Count : 227451
-[2026-06-12 14:48:04,197] [57] [src.components.data_transformation] [INFO] - After SMOTE  - Fraud Count: 227451, Genuine Count: 227451
-[2026-06-12 14:48:04,197] [59] [src.components.data_transformation] [INFO] - Data Transformation Successfully Completed

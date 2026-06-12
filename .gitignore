@@ -16,6 +16,7 @@ logs/
 
 # MLflow
 mlruns/
+mlflow.db
 
 # Dataset
 data/creditcard.csv
@@ -35,8 +36,6 @@ dist/
 # Testing
 .pytest_cache/
 
-# Model artifacts (optional)
+# Model artifacts (large binaries)
 artifacts/model/model.pkl
 artifacts/model/scaler.pkl
-logs/
-mlruns/

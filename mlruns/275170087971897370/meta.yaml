@@ -1,9 +1,0 @@
-artifact_location: file:///home/naman/Desktop/Something/mlruns/275170087971897370
-creation_time: 1781257296734
-effective_trace_archival_retention: null
-experiment_id: '275170087971897370'
-last_update_time: 1781257296734
-lifecycle_stage: active
-name: CreditCard-Fraud-Detection
-trace_location: null
-workspace: default
