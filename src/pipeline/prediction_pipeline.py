@@ -23,20 +23,29 @@ class PredictionPipeline:
         df_scaled[self.feature_scale] = self.scaler.transform(df[self.feature_scale])
 
         probabilities = self.model.predict_proba(df_scaled)[:, 1]
+        print(self.model.predict_proba(df_scaled))
         predictions = (probabilities >= threshold).astype(int)
 
         logger.info(f"Predictions complete — {int(predictions.sum())} fraud(s) detected out of {len(predictions)} transactions.")
+        
         return predictions, probabilities
 
 
 if __name__ == "__main__":
-    # Quick test: predict on first 10 rows of the dataset
-    df = pd.read_csv("data/creditcard.csv").head(10)
-    labels = df["Class"].values
-    df = df.drop(columns="Class")
 
     pipeline = PredictionPipeline()
-    preds, probs = pipeline.predict(df)
+    df = pd.read_csv("data/creditcard.csv")
+
+    frauds = df[df["Class"] == 1].head(20)
+
+    labels = frauds["Class"].values
+    frauds = frauds.drop(columns=["Class"])
+    preds, probs = pipeline.predict(frauds)
 
     for i in range(len(preds)):
-        print(f"  Row {i}: pred={preds[i]}, prob={probs[i]:.4f}, actual={labels[i]}")
+        print(
+            f"Row {i}: pred={preds[i]}, "
+            f"prob={probs[i]:.4f}, "
+            f"actual={labels[i]}"
+        )
+        

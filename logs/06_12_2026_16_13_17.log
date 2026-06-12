@@ -1,0 +1,5 @@
+[2026-06-12 16:13:18,518] [11] [__main__] [INFO] - Loading model and scaler for prediction pipeline...
+[2026-06-12 16:13:19,183] [30] [src.utils.save_object] [INFO] - Successfully loaded object from artifacts/model/model.pkl
+[2026-06-12 16:13:19,184] [30] [src.utils.save_object] [INFO] - Successfully loaded object from artifacts/model/scaler.pkl
+[2026-06-12 16:13:19,184] [15] [__main__] [INFO] - Prediction pipeline initialized successfully.
+[2026-06-12 16:13:19,216] [28] [__main__] [INFO] - Predictions complete — 0 fraud(s) detected out of 10 transactions.

@@ -1,0 +1,10 @@
+[2026-06-12 17:05:10,479] [11] [src.components.data_ingestion] [INFO] - Data Ingestion started ... 
+[2026-06-12 17:05:12,503] [23] [src.components.data_ingestion] [INFO] - Data Ingestion Successfully Completed
+[2026-06-12 17:05:12,504] [40] [src.components.data_transformation] [INFO] - Data Transformation Started ...
+[2026-06-12 17:05:12,786] [18] [src.utils.save_object] [INFO] - Successfully saved object to artifacts/model/scaler.pkl
+[2026-06-12 17:05:17,905] [52] [src.components.data_transformation] [INFO] - Before SMOTE - Fraud Count : 394 , Genuine Count : 227451
+[2026-06-12 17:05:18,469] [57] [src.components.data_transformation] [INFO] - After SMOTE  - Fraud Count: 227451, Genuine Count: 227451
+[2026-06-12 17:05:18,470] [59] [src.components.data_transformation] [INFO] - Data Transformation Successfully Completed
+[2026-06-12 17:05:18,472] [75] [src.components.model_training] [INFO] - Starting model training on scaled baseline data (No SMOTE)... 
+[2026-06-12 17:05:18,563] [81] [src.components.model_training] [INFO] - Started parent MLflow run: Model-Training-Pipeline
+[2026-06-12 17:05:24,793] [98] [src.components.model_training] [INFO] - [Logistic Regression] Baseline Evaluation Complete. AUPRC: 0.7388
