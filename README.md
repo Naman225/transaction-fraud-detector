@@ -3,11 +3,19 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-API-green)
 ![MLflow](https://img.shields.io/badge/MLflow-Tracking-blue)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success)](https://transaction-fraud-detector-atzt.onrender.com/)
 
 A production-style machine learning system for detecting fraudulent credit card transactions using **Random Forest**, **MLflow**, **FastAPI**, and **Streamlit**.
 
 Built as an end-to-end ML pipeline — from raw data ingestion to a deployed prediction API with an interactive fraud operations dashboard.
 
+## 🚀 Live Demo
+
+👉 https://transaction-fraud-detector-atzt.onrender.com/
+
+Try the deployed fraud detection dashboard directly from your browser.
+
+Upload a CSV file, adjust the fraud detection threshold, analyze high-risk transactions, and download prediction results.
 
 ---
 
@@ -21,6 +29,9 @@ Built as an end-to-end ML pipeline — from raw data ingestion to a deployed pre
 - Implemented experiment tracking with MLflow and SQLite backend.
 - Developed a REST API for batch fraud prediction.
 - Created a Streamlit fraud operations dashboard for analyst workflows.
+- Deployed a live fraud detection dashboard on Render.
+- Built a complete ML workflow from training to deployment.
+- Implemented experiment tracking and model selection using MLflow.
 This project detects fraudulent credit card transactions using supervised machine learning on highly imbalanced data.
 
 The system includes:
@@ -32,7 +43,6 @@ The system includes:
 - **FastAPI Prediction Service** — REST API for real-time batch predictions
 - **Streamlit Dashboard** — Interactive fraud operations UI with CSV upload and risk categorization
 - **Serialized Artifacts** — Trained model, scaler, and metadata persisted for inference
-Streamlit
 ---
 
 ## 🏗️ System Architecture
@@ -42,13 +52,7 @@ Streamlit
 │                   Streamlit Dashboard                   │
 │              (CSV Upload + Risk Analysis)               │
 └──────────────────────┬──────────────────────────────────┘
-                       │ HTTP POST /predict
-                       ▼
-┌─────────────────────────────────────────────────────────┐
-│                     FastAPI Server                      │
-│            (Request Validation + Routing)                │
-└──────────────────────┬──────────────────────────────────┘
-                       │
+                       │ 
                        ▼
 ┌─────────────────────────────────────────────────────────┐
 │                  Prediction Pipeline                    │
@@ -62,7 +66,7 @@ Streamlit
 └──────────────────────┬──────────────────────────────────┘
                        │
                        ▼
-              Fraud Predictions + Probabilities
+              Fraud Predictions + Risk Levels
 ```
 
 ---
@@ -344,7 +348,7 @@ The dashboard provides a no-code interface for fraud analysts to interact with t
 
 - 📂 **CSV Upload** — Upload transaction datasets for batch prediction
 - 🎚️ **Threshold Slider** — Adjustable fraud detection threshold (0.0–1.0)
-- 🔍 **Fraud Detection** — Real-time predictions via the FastAPI backend
+- 🔍 **Fraud Detection** — Real-time predictions using the trained Random Forest model
 - ⚠️ **Risk Categorization** — High / Medium / Low risk labels
 - 📊 **Fraud Distribution Chart** — Pie chart + bar chart visualizations
 - 🏷️ **High Risk Transactions** — Filtered view of flagged transactions
@@ -352,7 +356,26 @@ The dashboard provides a no-code interface for fraud analysts to interact with t
 
 ![Streamlit Dashboard](images/dashboard.png)
 
+### Try the Live Dashboard
+
+🔗 https://transaction-fraud-detector-atzt.onrender.com/
+
 ---
+## ☁️ Deployment
+
+The Streamlit dashboard is deployed on Render.
+
+### Production URL
+
+https://transaction-fraud-detector-atzt.onrender.com/
+
+### Deployment Stack
+
+- Render
+- Streamlit
+- Scikit-Learn
+- Random Forest
+- Serialized Model Artifacts
 
 ## 🛠️ Installation
 
@@ -396,15 +419,8 @@ mlflow ui --backend-store-uri sqlite:///mlflow.db
 
 Open: [http://localhost:5000](http://localhost:5000)
 
-### 3. Start the FastAPI Server
 
-```bash
-uvicorn app:app --reload
-```
-
-Open: [http://localhost:8000/docs](http://localhost:8000/docs)
-
-### 4. Run the Streamlit Dashboard
+### 3. Run the Streamlit Dashboard
 
 ```bash
 streamlit run streamlit_app.py
@@ -412,7 +428,9 @@ streamlit run streamlit_app.py
 
 Open: [http://localhost:8501](http://localhost:8501)
 
-> **Note:** The FastAPI server must be running before using the Streamlit dashboard.
+### Live Deployment
+
+https://transaction-fraud-detector-atzt.onrender.com/
 
 ---
 ## ✨ Project Highlights
@@ -425,6 +443,7 @@ Open: [http://localhost:8501](http://localhost:8501)
 - Interactive fraud operations dashboard using Streamlit.
 - Batch prediction support through CSV uploads.
 - Threshold-based fraud detection and risk categorization.
+- Deployed a production-ready fraud detection dashboard on Render.
 
 ## 🔮 Future Improvements
 
