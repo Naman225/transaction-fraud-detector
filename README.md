@@ -8,7 +8,6 @@ A production-style machine learning system for detecting fraudulent credit card 
 
 Built as an end-to-end ML pipeline — from raw data ingestion to a deployed prediction API with an interactive fraud operations dashboard.
 
-![Dashboard](images/dashboard.png)
 
 ---
 
@@ -33,7 +32,7 @@ The system includes:
 - **FastAPI Prediction Service** — REST API for real-time batch predictions
 - **Streamlit Dashboard** — Interactive fraud operations UI with CSV upload and risk categorization
 - **Serialized Artifacts** — Trained model, scaler, and metadata persisted for inference
-
+Streamlit
 ---
 
 ## 🏗️ System Architecture
@@ -453,7 +452,6 @@ Open: [http://localhost:8501](http://localhost:8501)
 
 ---
 
-## 👤 Author
 
 ## 👤 Author
 

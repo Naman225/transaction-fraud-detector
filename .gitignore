@@ -37,5 +37,5 @@ dist/
 .pytest_cache/
 
 # Model artifacts (large binaries)
-artifacts/model/model.pkl
-artifacts/model/scaler.pkl
+# artifacts/model/model.pkl
+# artifacts/model/scaler.pkl
