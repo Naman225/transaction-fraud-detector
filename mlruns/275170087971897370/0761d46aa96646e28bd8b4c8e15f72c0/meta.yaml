@@ -1,0 +1,14 @@
+artifact_uri: file:///home/naman/Desktop/Something/mlruns/275170087971897370/0761d46aa96646e28bd8b4c8e15f72c0/artifacts
+end_time: 1781257325111
+entry_point_name: ''
+experiment_id: '275170087971897370'
+lifecycle_stage: active
+run_id: 0761d46aa96646e28bd8b4c8e15f72c0
+run_name: Random Forest
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1781257308900
+status: 4
+tags: []
+user_id: Naman225

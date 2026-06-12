@@ -1,0 +1,14 @@
+artifact_uri: file:///home/naman/Desktop/Something/mlruns/275170087971897370/554b2fda7c2f489293bbb65aba1ea32e/artifacts
+end_time: 1781257325113
+entry_point_name: ''
+experiment_id: '275170087971897370'
+lifecycle_stage: active
+run_id: 554b2fda7c2f489293bbb65aba1ea32e
+run_name: Baseline-Experiment
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1781257304356
+status: 4
+tags: []
+user_id: Naman225

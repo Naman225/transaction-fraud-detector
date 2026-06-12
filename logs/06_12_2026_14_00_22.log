@@ -1,0 +1,18 @@
+[2026-06-12 14:00:23,730] [11] [src.components.data_ingestion] [INFO] - Data Ingestion started ... 
+[2026-06-12 14:00:25,437] [23] [src.components.data_ingestion] [INFO] - Data Ingestion Successfully Completed
+[2026-06-12 14:00:25,437] [39] [src.components.data_transformation] [INFO] - Data Transformation Started ...
+[2026-06-12 14:00:29,353] [51] [src.components.data_transformation] [INFO] - Before SMOTE - Fraud Count : 394 , Genuine Count : 227451
+[2026-06-12 14:00:30,172] [56] [src.components.data_transformation] [INFO] - After SMOTE  - Fraud Count: 227451, Genuine Count: 227451
+[2026-06-12 14:00:30,172] [58] [src.components.data_transformation] [INFO] - Data Transformation Successfully Completed
+[2026-06-12 14:00:30,172] [36] [__main__] [INFO] - Starting model training on scaled baseline data (No SMOTE)... 
+[2026-06-12 14:00:31,960] [54] [__main__] [INFO] - [Logistic Regression] Baseline Evaluation Complete. AUPRC: 0.7388
+[2026-06-12 14:01:20,062] [54] [__main__] [INFO] - [Random Forest] Baseline Evaluation Complete. AUPRC: 0.8734
+[2026-06-12 14:01:23,481] [54] [__main__] [INFO] - [Xgboost] Baseline Evaluation Complete. AUPRC: 0.7973
+[2026-06-12 14:01:25,269] [54] [__main__] [INFO] - [LightGBM] Baseline Evaluation Complete. AUPRC: 0.1028
+[2026-06-12 14:01:25,270] [69] [__main__] [INFO] - Training on SMOTE balanced Data ... 
+[2026-06-12 14:01:29,773] [88] [__main__] [INFO] - [Logistic Regression] SMOTE Evaluation Complete. AUPRC: 0.7251
+[2026-06-12 14:02:46,785] [88] [__main__] [INFO] - [Random Forest] SMOTE Evaluation Complete. AUPRC: 0.8706
+[2026-06-12 14:02:49,493] [88] [__main__] [INFO] - [Xgboost] SMOTE Evaluation Complete. AUPRC: 0.8652
+[2026-06-12 14:02:52,211] [88] [__main__] [INFO] - [LightGBM] SMOTE Evaluation Complete. AUPRC: 0.7755
+[2026-06-12 14:02:53,069] [133] [__main__] [INFO] - Saved feature importance matrix visualization to: artifacts/model_trainer/global_feature_importance.png
+[2026-06-12 14:02:56,002] [142] [__main__] [INFO] - Calculating SHAP values for XGBoost (Sampling up to 500 records)...

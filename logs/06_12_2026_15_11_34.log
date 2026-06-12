@@ -1,0 +1,9 @@
+[2026-06-12 15:11:36,736] [11] [src.components.data_ingestion] [INFO] - Data Ingestion started ... 
+[2026-06-12 15:11:38,371] [23] [src.components.data_ingestion] [INFO] - Data Ingestion Successfully Completed
+[2026-06-12 15:11:38,371] [40] [src.components.data_transformation] [INFO] - Data Transformation Started ...
+[2026-06-12 15:11:38,567] [18] [src.utils.save_object] [INFO] - Successfully saved object to artifacts/model/scaler.pkl
+[2026-06-12 15:11:43,579] [52] [src.components.data_transformation] [INFO] - Before SMOTE - Fraud Count : 394 , Genuine Count : 227451
+[2026-06-12 15:11:44,303] [57] [src.components.data_transformation] [INFO] - After SMOTE  - Fraud Count: 227451, Genuine Count: 227451
+[2026-06-12 15:11:44,303] [59] [src.components.data_transformation] [INFO] - Data Transformation Successfully Completed
+[2026-06-12 15:11:44,304] [69] [src.components.model_training] [INFO] - Starting model training on scaled baseline data (No SMOTE)... 
+[2026-06-12 15:11:48,898] [87] [src.components.model_training] [INFO] - [Logistic Regression] Baseline Evaluation Complete. AUPRC: 0.7388

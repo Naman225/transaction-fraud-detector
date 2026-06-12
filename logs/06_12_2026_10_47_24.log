@@ -1,0 +1,103 @@
+[2026-06-12 10:47:26,279] [11] [src.components.data_ingestion] [INFO] - Data Ingestion started ... 
+[2026-06-12 10:47:28,168] [23] [src.components.data_ingestion] [INFO] - Data Ingestion Successfully Completed
+[2026-06-12 10:47:28,168] [39] [src.components.data_transformation] [INFO] - Data Transformation Started ...
+[2026-06-12 10:47:36,700] [50] [src.components.data_transformation] [INFO] - Before SMOTE - Fraud Count : 394 , Genuine Count : 227451
+[2026-06-12 10:47:37,272] [55] [src.components.data_transformation] [INFO] - After SMOTE  - Fraud Count: 227451, Genuine Count: 227451
+[2026-06-12 10:47:37,272] [57] [src.components.data_transformation] [INFO] - Data Transformation Successfully Completed
+[2026-06-12 10:47:37,273] [33] [__main__] [INFO] - Training on scaled Data ... 
+[2026-06-12 10:47:39,276] [40] [__main__] [INFO] - Logistic Regression Evaluation Report
+[2026-06-12 10:47:39,344] [41] [__main__] [INFO] -               precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00     56864
+           1       0.83      0.64      0.72        98
+
+    accuracy                           1.00     56962
+   macro avg       0.91      0.82      0.86     56962
+weighted avg       1.00      1.00      1.00     56962
+
+[2026-06-12 10:47:39,345] [42] [__main__] [INFO] - [Logistic Regression] Area under Precision Recall Curve: 0.738833
+[2026-06-12 10:47:39,345] [33] [__main__] [INFO] - Training on scaled Data ... 
+[2026-06-12 10:48:49,818] [40] [__main__] [INFO] - Random Forest Evaluation Report
+[2026-06-12 10:48:49,863] [41] [__main__] [INFO] -               precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00     56864
+           1       0.94      0.82      0.87        98
+
+    accuracy                           1.00     56962
+   macro avg       0.97      0.91      0.94     56962
+weighted avg       1.00      1.00      1.00     56962
+
+[2026-06-12 10:48:49,863] [42] [__main__] [INFO] - [Random Forest] Area under Precision Recall Curve: 0.873391
+[2026-06-12 10:48:49,864] [33] [__main__] [INFO] - Training on scaled Data ... 
+[2026-06-12 10:48:54,891] [40] [__main__] [INFO] - Xgboost Evaluation Report
+[2026-06-12 10:48:54,942] [41] [__main__] [INFO] -               precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00     56864
+           1       0.87      0.80      0.83        98
+
+    accuracy                           1.00     56962
+   macro avg       0.93      0.90      0.91     56962
+weighted avg       1.00      1.00      1.00     56962
+
+[2026-06-12 10:48:54,942] [42] [__main__] [INFO] - [Xgboost] Area under Precision Recall Curve: 0.797291
+[2026-06-12 10:48:54,942] [33] [__main__] [INFO] - Training on scaled Data ... 
+[2026-06-12 10:48:58,267] [40] [__main__] [INFO] - LightGBM Evaluation Report
+[2026-06-12 10:48:58,313] [41] [__main__] [INFO] -               precision    recall  f1-score   support
+
+           0       1.00      0.99      1.00     56864
+           1       0.14      0.63      0.23        98
+
+    accuracy                           0.99     56962
+   macro avg       0.57      0.81      0.61     56962
+weighted avg       1.00      0.99      1.00     56962
+
+[2026-06-12 10:48:58,313] [42] [__main__] [INFO] - [LightGBM] Area under Precision Recall Curve: 0.102761
+[2026-06-12 10:48:58,313] [47] [__main__] [INFO] - Training on SMOTE balanced Data ... 
+[2026-06-12 10:49:03,709] [56] [__main__] [INFO] - Logistic Regression Evaluation Report
+[2026-06-12 10:49:03,760] [57] [__main__] [INFO] -               precision    recall  f1-score   support
+
+           0       1.00      0.97      0.99     56864
+           1       0.06      0.92      0.11        98
+
+    accuracy                           0.97     56962
+   macro avg       0.53      0.95      0.55     56962
+weighted avg       1.00      0.97      0.99     56962
+
+[2026-06-12 10:49:03,761] [58] [__main__] [INFO] - [Logistic Regression] Area under Precision Recall Curve: 0.725058
+[2026-06-12 10:49:03,761] [47] [__main__] [INFO] - Training on SMOTE balanced Data ... 
+[2026-06-12 10:50:55,619] [56] [__main__] [INFO] - Random Forest Evaluation Report
+[2026-06-12 10:50:55,662] [57] [__main__] [INFO] -               precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00     56864
+           1       0.86      0.84      0.85        98
+
+    accuracy                           1.00     56962
+   macro avg       0.93      0.92      0.92     56962
+weighted avg       1.00      1.00      1.00     56962
+
+[2026-06-12 10:50:55,662] [58] [__main__] [INFO] - [Random Forest] Area under Precision Recall Curve: 0.870588
+[2026-06-12 10:50:55,662] [47] [__main__] [INFO] - Training on SMOTE balanced Data ... 
+[2026-06-12 10:51:01,020] [56] [__main__] [INFO] - Xgboost Evaluation Report
+[2026-06-12 10:51:01,055] [57] [__main__] [INFO] -               precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00     56864
+           1       0.71      0.86      0.78        98
+
+    accuracy                           1.00     56962
+   macro avg       0.86      0.93      0.89     56962
+weighted avg       1.00      1.00      1.00     56962
+
+[2026-06-12 10:51:01,055] [58] [__main__] [INFO] - [Xgboost] Area under Precision Recall Curve: 0.865170
+[2026-06-12 10:51:01,055] [47] [__main__] [INFO] - Training on SMOTE balanced Data ... 
+[2026-06-12 10:51:10,132] [56] [__main__] [INFO] - LightGBM Evaluation Report
+[2026-06-12 10:51:10,174] [57] [__main__] [INFO] -               precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00     56864
+           1       0.49      0.87      0.63        98
+
+    accuracy                           1.00     56962
+   macro avg       0.75      0.93      0.81     56962
+weighted avg       1.00      1.00      1.00     56962
+
+[2026-06-12 10:51:10,175] [58] [__main__] [INFO] - [LightGBM] Area under Precision Recall Curve: 0.775470
+[2026-06-12 10:51:19,078] [83] [__main__] [INFO] - Calculate Shap values for xgboost

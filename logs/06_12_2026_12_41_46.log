@@ -1,0 +1,6 @@
+[2026-06-12 12:41:47,207] [11] [src.components.data_ingestion] [INFO] - Data Ingestion started ... 
+[2026-06-12 12:41:48,587] [23] [src.components.data_ingestion] [INFO] - Data Ingestion Successfully Completed
+[2026-06-12 12:41:48,588] [39] [src.components.data_transformation] [INFO] - Data Transformation Started ...
+[2026-06-12 12:41:52,839] [51] [src.components.data_transformation] [INFO] - Before SMOTE - Fraud Count : 394 , Genuine Count : 227451
+[2026-06-12 12:41:53,235] [56] [src.components.data_transformation] [INFO] - After SMOTE  - Fraud Count: 227451, Genuine Count: 227451
+[2026-06-12 12:41:53,235] [58] [src.components.data_transformation] [INFO] - Data Transformation Successfully Completed

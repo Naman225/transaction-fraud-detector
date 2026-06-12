@@ -1,0 +1,10 @@
+artifact_location: file:///home/naman/Desktop/Something/mlruns/275170087971897370/models/m-fce1a030a15b4b3ba303424394d39f46/artifacts
+creation_timestamp: 1781257305861
+experiment_id: '275170087971897370'
+last_updated_timestamp: 1781257308862
+model_id: m-fce1a030a15b4b3ba303424394d39f46
+model_type: null
+name: model
+source_run_id: 5b6e23a581484aa48e73e2343fc2ae8d
+status: 2
+status_message: null

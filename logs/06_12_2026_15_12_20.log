@@ -1,0 +1,22 @@
+[2026-06-12 15:12:23,609] [11] [src.components.data_ingestion] [INFO] - Data Ingestion started ... 
+[2026-06-12 15:12:25,000] [23] [src.components.data_ingestion] [INFO] - Data Ingestion Successfully Completed
+[2026-06-12 15:12:25,000] [40] [src.components.data_transformation] [INFO] - Data Transformation Started ...
+[2026-06-12 15:12:25,183] [18] [src.utils.save_object] [INFO] - Successfully saved object to artifacts/model/scaler.pkl
+[2026-06-12 15:12:29,552] [52] [src.components.data_transformation] [INFO] - Before SMOTE - Fraud Count : 394 , Genuine Count : 227451
+[2026-06-12 15:12:30,040] [57] [src.components.data_transformation] [INFO] - After SMOTE  - Fraud Count: 227451, Genuine Count: 227451
+[2026-06-12 15:12:30,040] [59] [src.components.data_transformation] [INFO] - Data Transformation Successfully Completed
+[2026-06-12 15:12:30,041] [69] [src.components.model_training] [INFO] - Starting model training on scaled baseline data (No SMOTE)... 
+[2026-06-12 15:12:34,621] [87] [src.components.model_training] [INFO] - [Logistic Regression] Baseline Evaluation Complete. AUPRC: 0.7388
+[2026-06-12 15:13:24,565] [87] [src.components.model_training] [INFO] - [Random Forest] Baseline Evaluation Complete. AUPRC: 0.8734
+[2026-06-12 15:13:30,990] [87] [src.components.model_training] [INFO] - [Xgboost] Baseline Evaluation Complete. AUPRC: 0.7973
+[2026-06-12 15:13:35,299] [87] [src.components.model_training] [INFO] - [LightGBM] Baseline Evaluation Complete. AUPRC: 0.1028
+[2026-06-12 15:13:35,311] [100] [src.components.model_training] [INFO] - Saved baseline metrics to artifacts/metrics/model_metrics_baseline.csv
+[2026-06-12 15:13:35,311] [105] [src.components.model_training] [INFO] - Training on SMOTE balanced Data ... 
+[2026-06-12 15:13:41,923] [124] [src.components.model_training] [INFO] - [Logistic Regression] SMOTE Evaluation Complete. AUPRC: 0.7251
+[2026-06-12 15:14:57,003] [124] [src.components.model_training] [INFO] - [Random Forest] SMOTE Evaluation Complete. AUPRC: 0.8706
+[2026-06-12 15:15:02,771] [124] [src.components.model_training] [INFO] - [Xgboost] SMOTE Evaluation Complete. AUPRC: 0.8652
+[2026-06-12 15:15:08,667] [124] [src.components.model_training] [INFO] - [LightGBM] SMOTE Evaluation Complete. AUPRC: 0.7755
+[2026-06-12 15:15:08,682] [137] [src.components.model_training] [INFO] - Saved SMOTE metrics to artifacts/metrics/model_metrics_smote.csv
+[2026-06-12 15:15:08,708] [18] [src.utils.save_object] [INFO] - Successfully saved object to artifacts/model/model.pkl
+[2026-06-12 15:15:08,708] [156] [src.components.model_training] [INFO] - Best model: 'Random Forest' (AUPRC=0.8706) saved to artifacts/model/model.pkl
+[2026-06-12 15:15:09,665] [188] [src.components.model_training] [INFO] - Saved feature importance matrix visualization to: artifacts/metrics/global_feature_importance.png
