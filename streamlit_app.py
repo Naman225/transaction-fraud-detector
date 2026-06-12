@@ -1,28 +1,18 @@
 import streamlit as st
 import pandas as pd
-import requests
 import matplotlib.pyplot as plt
+from src.pipeline.prediction_pipeline import PredictionPipeline
 
-try:
-    health = requests.get(
-        "http://127.0.0.1:8000/health",
-        timeout=2
-    )
+@st.cache_resource
+def load_pipeline():
+    return PredictionPipeline()
 
-    if health.status_code == 200:
-        st.sidebar.success(
-            "API Status: Connected"
-        )
-    else:
-        st.sidebar.error(
-            "API Status: Offline"
-        )
+pipeline = load_pipeline()
 
-except:
-    st.sidebar.error(
-        "API Status: Offline"
-    )
-    
+st.sidebar.success(
+    "Model Loaded Successfully"
+)
+st.title("Credit Card Fraud Detector")
 st.markdown("""
 Upload a transaction dataset and identify
 potentially fraudulent transactions using a
@@ -84,38 +74,29 @@ if uploaded_file:
 
     if st.button("Run Detection"):
 
-        payload = {
-            "transactions": df.to_dict(
-                orient="records"
-            ),
-            "threshold": threshold
-        }
-
         try:
-            response = requests.post(
-                "http://127.0.0.1:8000/predict",
-                json=payload,
-                timeout=30
+
+            predictions, probabilities = pipeline.predict(
+                df,
+                threshold=threshold
             )
 
-            response.raise_for_status()
-
-            result = response.json()
-
         except Exception as e:
-            st.error(f"Prediction failed: {e}")
+
+            st.error(
+                f"Prediction failed: {e}"
+            )
             st.stop()
 
+        fraud_count = int(predictions.sum())
+
         st.success(
-            f"Frauds detected: "
-            f"{result['fraud_count']}"
+            f"Frauds detected: {fraud_count}"
         )
 
-        df["Prediction"] = result["predictions"]
+        df["Prediction"] = predictions
 
-        df["Fraud_Probability"] = result[
-            "probabilities"
-        ]
+        df["Fraud_Probability"] = probabilities
         def risk_level(prob):
             if prob >= 0.90:
                 return "High"
@@ -131,15 +112,6 @@ if uploaded_file:
             df["Prediction"] == 1
         ]
 
-        if len(high_risk) == 0:
-            st.info("No high-risk transactions detected.")
-        else:
-            st.dataframe(
-                high_risk.sort_values(
-                    "Fraud_Probability",
-                    ascending=False
-                )
-            )
         st.subheader(
             "High Risk Transactions"
         )
@@ -205,7 +177,7 @@ if uploaded_file:
             "text/csv"
         )
         fraud_rate = (
-            result["fraud_count"] / len(df)
+            fraud_count / len(df)
         ) * 100
         col1, col2, col3 = st.columns(3)
 
@@ -213,7 +185,7 @@ if uploaded_file:
             st.metric("Transactions", len(df))
 
         with col2:
-            st.metric("Frauds", result["fraud_count"])
+            st.metric("Frauds", fraud_count)
 
         with col3:
             st.metric(
@@ -222,7 +194,7 @@ if uploaded_file:
             )
 
 
-        frauds = result["fraud_count"]
+        frauds = fraud_count
         normal = len(df) - frauds
 
         fig, ax = plt.subplots()
