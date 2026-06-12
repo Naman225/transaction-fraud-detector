@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns  
 import warnings
 import logging
+import json
 
 from src.utils.save_object import save_object
 from src.utils.logger import get_logger
@@ -47,6 +48,7 @@ class ModelTrainer:
 
     def _log_model_run(self, name, model, y_test, y_preds, y_proba):
         """Helper: log params + metrics + model to the current active MLflow run."""
+        
         precision = precision_score(y_test, y_preds)
         recall = recall_score(y_test, y_preds)
         f1 = f1_score(y_test, y_preds)
@@ -155,36 +157,59 @@ class ModelTrainer:
 
 
     def save_best_model(self):
-        """Selects the best model by AUPRC (from SMOTE experiment) and saves it to artifacts/model/model.pkl"""
+        """
+        Select best model based on SMOTE AUPRC
+        and save locally.
+        """
+
         if not self.trained_models:
-            logger.error("No trained models found. Cannot save.")
-            return
-        if not self.model_scores:
-            logger.error("No model scores recorded. Run train_and_evaluate() first.")
+            logger.error("No trained models found.")
             return
 
-        best_name = max(self.model_scores, key=self.model_scores.get)
+        if not self.model_scores:
+            logger.error("No model scores found.")
+            return
+
+        best_name = max(
+            self.model_scores,
+            key=self.model_scores.get
+        )
+
         best_model = self.trained_models[best_name]
+
         best_auprc = self.model_scores[best_name]
 
-        model_path = os.path.join(self.artifact_dir_2, "model.pkl")
-        save_object(model_path, best_model)
-        
-        scaler_path = os.path.join(self.artifact_dir_2, "scaler.pkl")
-        
-        # Log to active parent run if available
-        if mlflow.active_run() is not None:
-            mlflow.log_artifact(model_path)
-            if os.path.exists(scaler_path):
-                mlflow.log_artifact(scaler_path)
-            else:
-                logger.warning(f"Scaler not found at {scaler_path}, cannot log to MLflow.")
-            mlflow.log_param("best_model", best_name)
-            mlflow.log_metric("best_auprc", best_auprc)
-        else:
-            logger.warning("No active MLflow run found. Best model details saved locally but not logged to MLflow.")
+        model_path = os.path.join(
+            self.artifact_dir_2,
+            "model.pkl"
+        )
 
-        logger.info(f"Best model: '{best_name}' (AUPRC={best_auprc:.4f}) saved to {model_path}")
+        save_object(model_path, best_model)
+
+        metadata = {
+            "best_model": best_name,
+            "best_auprc": float(best_auprc),
+            "threshold": 0.5
+        }
+
+        metadata_path = os.path.join(
+            self.artifact_dir_2,
+            "metadata.json"
+        )
+
+        with open(metadata_path, "w") as f:
+            json.dump(
+                metadata,
+                f,
+                indent=4
+            )
+
+        logger.info(
+            f"Best model '{best_name}' "
+            f"(AUPRC={best_auprc:.4f}) "
+            f"saved to {model_path}"
+        )
+
         return best_name, best_model
 
         
@@ -285,6 +310,8 @@ class ModelTrainer:
 
         # Use the active parent run if available
         active_run = mlflow.active_run()
+        
+    
         if active_run is not None:
             mlflow.set_tag("best_model", best_name)
             mlflow.log_metric("best_auprc", best_auprc)
@@ -299,13 +326,34 @@ class ModelTrainer:
             model_path = os.path.join(self.artifact_dir_2, "model.pkl")
             if os.path.exists(model_path):
                 mlflow.log_artifact(model_path, artifact_path="model")
+            logger.info(
+            f"Logged all experiment artifacts to active parent MLflow run. "
+            f"Best model: {best_name}")
 
             # Log scaler pkl
-            scaler_path = os.path.join(self.artifact_dir_2, "scaler.pkl")
-            if os.path.exists(scaler_path):
-                mlflow.log_artifact(scaler_path, artifact_path="scaler")
+            # Log scaler pkl
+            scaler_path = os.path.join(
+                self.artifact_dir_2,
+                "scaler.pkl"
+            )
 
-            logger.info(f"Logged all experiment artifacts to active parent MLflow run. Best model: {best_name}")
+            if os.path.exists(scaler_path):
+                mlflow.log_artifact(
+                    scaler_path,
+                    artifact_path="model"
+                )
+
+            # Log metadata.json
+            metadata_path = os.path.join(
+                self.artifact_dir_2,
+                "metadata.json"
+            )
+
+            if os.path.exists(metadata_path):
+                mlflow.log_artifact(
+                    metadata_path,
+                    artifact_path="model"
+                )
         else:
             # Fallback if no active run is present
             with mlflow.start_run(run_name=f"Best-Model-{best_name}"):
@@ -321,14 +369,36 @@ class ModelTrainer:
                 if os.path.exists(model_path):
                     mlflow.log_artifact(model_path, artifact_path="model")
 
-                scaler_path = os.path.join(self.artifact_dir_2, "scaler.pkl")
+                scaler_path = os.path.join(
+                    self.artifact_dir_2,
+                    "scaler.pkl"
+                )
+
                 if os.path.exists(scaler_path):
-                    mlflow.log_artifact(scaler_path, artifact_path="scaler")
+                    mlflow.log_artifact(
+                        scaler_path,
+                        artifact_path="model"
+                    )
+
+                metadata_path = os.path.join(
+                    self.artifact_dir_2,
+                    "metadata.json"
+                )
+
+                if os.path.exists(metadata_path):
+                    mlflow.log_artifact(
+                        metadata_path,
+                        artifact_path="model"
+                    )
 
                 logger.info(f"Logged all experiment artifacts to new MLflow run. Best model: {best_name}")
 
-        # End parent run if it was started by the trainer
-        if hasattr(self, 'parent_run') and self.parent_run is not None:
+    def close_mlflow_run(self):
+
+        if mlflow.active_run():
+
+            logger.info(
+                "Closing MLflow run..."
+            )
+
             mlflow.end_run()
-            logger.info("Ended parent MLflow run successfully.")
-            self.parent_run = None
