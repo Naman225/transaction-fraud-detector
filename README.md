@@ -117,11 +117,13 @@ The system includes:
 │   │   ├── model_metrics_smote.csv
 │   │   ├── confusion_matrices.png
 │   │   ├── global_feature_importance.png
-│   │   └── shap_summary_xgboost.png
+│   │   ├── shap_summary_xgboost.png
+│   │   ├── threshold_analysis.png      # Precision-Recall threshold curves
+│   │   └── tuning_results.json         # Hyperparameter tuning results
 │   └── model/
 │       ├── model.pkl               # Best trained model (Random Forest)
 │       ├── scaler.pkl              # Fitted RobustScaler
-│       └── metadata.json           # Best model metadata
+│       └── metadata.json           # Best model metadata + optimal threshold
 │
 ├── src/
 │   ├── __init__.py
@@ -163,20 +165,31 @@ Data Transformation
 Model Training
    ├── Baseline Experiment (original data)
    └── SMOTE Experiment (resampled data)
-        │
-        ▼
+         │
+         ▼
+Hyperparameter Tuning
+   └── RandomizedSearchCV on Random Forest
+       (3-fold CV, 10 iterations, scored on AUPRC)
+       (Stratified 50K sample from SMOTE data for efficiency)
+         │
+         ▼
+Threshold Analysis
+   └── Precision-Recall curve → F1-maximized threshold
+         │
+         ▼
 Model Evaluation
    ├── Precision, Recall, F1, ROC-AUC, AUPRC
    ├── Confusion Matrices
    └── SHAP Explainability
-        │
-        ▼
+         │
+         ▼
 Best Model Selection (by AUPRC)
-        │
-        ▼
+         │
+         ▼
 Artifact Persistence
-   ├── model.pkl + scaler.pkl
+   ├── model.pkl + scaler.pkl + metadata.json
    ├── Evaluation plots (PNGs)
+   ├── tuning_results.json
    └── MLflow artifact logging
 ```
 
@@ -224,6 +237,54 @@ The best model was selected based on **AUPRC** (Area Under Precision-Recall Curv
 ### SHAP Explainability (XGBoost)
 
 ![SHAP Summary](images/shap_summary_xgboost.png)
+
+---
+
+## 📝 Observed Findings
+
+### 1. LightGBM Baseline Anomaly (AUPRC = 0.032)
+
+LightGBM baseline significantly underperformed all other models, achieving an AUPRC of **0.032** and a ROC-AUC of **0.468** (below random).
+
+**Investigation Results:**
+
+| Diagnostic | Value |
+|------------|-------|
+| Prediction Distribution | Near-total majority class predictions |
+| ROC-AUC | 0.468 (anti-predictive) |
+| Mean Fraud Probability | Near-zero across all samples |
+| Majority Class Collapse | Confirmed |
+
+**Root Cause:** LightGBM's **leaf-wise tree growth** strategy, combined with extreme class imbalance (99.83% genuine / 0.17% fraud) and no class weight adjustment, caused the model to effectively ignore minority-class gradient signal. The model converged to a near-constant prediction where fraud probabilities were essentially random noise — producing anti-correlated rankings (ROC-AUC < 0.5).
+
+**Validation:** With SMOTE resampling, LightGBM recovered to AUPRC = 0.775 and ROC-AUC = 0.944, confirming the hypothesis that class imbalance — not model architecture — was the root cause. XGBoost's level-wise growth proved more robust to the same imbalance (baseline ROC-AUC = 0.939).
+
+### 2. Optimal Threshold Analysis
+
+The default classification threshold of 0.5 is not optimal for fraud detection. Using the **precision-recall curve**, we computed the threshold that maximizes the **F1 score**:
+
+- The optimal threshold is persisted in `artifacts/model/metadata.json` and automatically loaded by the prediction pipeline and Streamlit dashboard.
+- This analysis reveals the precision-recall trade-off specific to this model and dataset.
+
+![Threshold Analysis](images/threshold_analysis.png)
+
+### 3. Hyperparameter Tuning
+
+Random Forest hyperparameters were optimized using **RandomizedSearchCV** with 3-fold cross-validation (10 iterations), scored on AUPRC.
+
+> [!NOTE]
+> To balance training runtime with analytical rigor, hyperparameter tuning is performed on a **stratified 50,000-row sample** from the SMOTE-resampled training set (~455K rows). This reduces tuning time by ~9× while maintaining a representative class distribution. All other pipeline stages (baseline training, SMOTE training, evaluation, threshold analysis) use the full dataset.
+
+**Search Space:**
+
+| Parameter | Values |
+|-----------|--------|
+| `n_estimators` | 100, 200, 300 |
+| `max_depth` | 10, 20, None |
+| `min_samples_split` | 2, 5, 10 |
+| `class_weight` | balanced, None |
+
+Best parameters and results are logged to MLflow and saved to `artifacts/metrics/tuning_results.json`.
 
 ---
 
@@ -452,7 +513,9 @@ https://transaction-fraud-detector-atzt.onrender.com/
 - [ ] Cloud deployment (AWS / GCP)
 - [ ] Real-time streaming predictions
 - [ ] MLflow Model Registry integration
-- [ ] Hyperparameter tuning with Optuna
+- [x] Hyperparameter tuning with RandomizedSearchCV
+- [x] Optimal threshold analysis (precision-recall curve)
+- [x] LightGBM baseline anomaly investigation
 - [ ] Unit & integration tests
 
 ---

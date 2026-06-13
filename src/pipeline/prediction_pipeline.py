@@ -1,4 +1,6 @@
 import pandas as pd
+import json
+import os
 from src.utils.save_object import load_object
 from src.utils.logger import get_logger
 
@@ -7,11 +9,21 @@ logger = get_logger(__name__)
 
 class PredictionPipeline:
     def __init__(self, model_path="artifacts/model/model.pkl",
-                 scaler_path="artifacts/model/scaler.pkl"):
+                 scaler_path="artifacts/model/scaler.pkl",
+                 metadata_path="artifacts/model/metadata.json"):
         logger.info("Loading model and scaler for prediction pipeline...")
         self.model = load_object(model_path)
         self.scaler = load_object(scaler_path)
         self.feature_scale = ['Time', 'Amount']
+
+        # Load optimal threshold from metadata
+        self.default_threshold = 0.5
+        if os.path.exists(metadata_path):
+            with open(metadata_path, "r") as f:
+                metadata = json.load(f)
+            self.default_threshold = metadata.get("threshold", 0.5)
+            logger.info(f"Loaded optimal threshold from metadata: {self.default_threshold:.4f}")
+
         logger.info("Prediction pipeline initialized successfully.")
 
     def predict(self, df: pd.DataFrame, threshold=0.5):

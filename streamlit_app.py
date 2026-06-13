@@ -39,8 +39,9 @@ threshold = st.slider(
     "Fraud Detection Threshold",
     min_value=0.0,
     max_value=1.0,
-    value=0.5,
-    step=0.05
+    value=float(pipeline.default_threshold),
+    step=0.05,
+    help=f"Optimal threshold from training: {pipeline.default_threshold:.3f}"
 )
 uploaded_file = st.file_uploader(
     "Upload CSV",

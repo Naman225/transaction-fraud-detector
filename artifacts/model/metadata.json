@@ -1,5 +1,5 @@
 {
     "best_model": "Random Forest",
-    "best_auprc": 0.870587753931471,
-    "threshold": 0.5
+    "best_auprc": 0.8759920301223337,
+    "threshold": 0.7951160714285714
 }
